@@ -1,25 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Map from "./map.js";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import data1 from "./dataSrc1.json"
+import data2 from "./dataSrc2.json"
+
+const dataSrc1 = data1;
+const dataSrc2 = data2;
+
+const dataSrc = [dataSrc1, dataSrc2];
+
+export default function App() {
+  return <Map dataSrc={dataSrc} />;
 }
-
-export default App;
