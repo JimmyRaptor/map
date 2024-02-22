@@ -6,18 +6,17 @@ import React, {
   useRef,
 } from "react";
 import ReactMapboxGl, {
-  Image,
+  Circle,
   GeoJSONLayer,
   MapContext,
 } from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useMotion } from "./useMotion.js";
-import van from "./truck.jpg";
 const Mapbox = ReactMapboxGl({
   accessToken:
     "pk.eyJ1IjoicmV0YXdlciIsImEiOiJjazJld3N3NTMwZTNrM2xtbXVsc3ZhbG80In0.pDFq8W8k0g8FBZgZ9nitpg",
 });
-const center = [121.517831, -30.7985];
+const center = [135.38535269, -29.57998956833];
 
 const inter = [
   "interpolate",
@@ -31,7 +30,6 @@ const inter = [
 const layout = {
   "icon-image": "vehicle",
   "icon-rotate": inter,
-  "icon-size": 0.015,
   "icon-ignore-placement": true,
   "icon-allow-overlap": true,
 };
@@ -51,7 +49,7 @@ function getFeatures(data) {
 export default function Map({ dataSrc }) {
   const [selected, setSelected] = useState(1);
   const mapRef = useRef();
-  const step = 30;
+  const step = 60;
   const geoData = useMemo(
     () => ({
       type: "FeatureCollection",
@@ -78,13 +76,10 @@ export default function Map({ dataSrc }) {
   const buttonStyle = {
     display: "flex", // 使用flex布局
     justifyContent: "flex-end", // 水平居中
-    marginTop: "20px", // 顶部外边距
+    marginLeft: "200px", // 顶部外边距
   };
   return (
     <>
-      <button onClick={handleUpdate} style={buttonStyle}>
-        Update Data
-      </button>
       <Mapbox
         style="mapbox://styles/mapbox/satellite-streets-v12"
         containerStyle={{
@@ -92,7 +87,7 @@ export default function Map({ dataSrc }) {
           width: "100vw",
         }}
         center={center}
-        zoom={[16]}
+        zoom={[15]}
         onDragEnd={(map, e) => console.log("Bounds:", map.getBounds())}
         onClick={(map, e) => console.log("clicked", e.lngLat)}
         onStyleLoad={(map) => onMapLoad(map)}
@@ -102,14 +97,13 @@ export default function Map({ dataSrc }) {
               console.log("map", map);
             }}
           </MapContext.Consumer> */}
-        <Image
-          id={"vehicle"}
-          url={van}
-          options={{ width: 10, height: 10 }}
-          alt=""
+         {/* <Circle id={"vehicle"} options={{ width: 10, height: 10 }} alt="" /> */}
+        <GeoJSONLayer
+          id={"geo123"}
+          data={frame}
+          symbolLayout={layout}
+          pointType={circle}
         />
-        {console.log("frame inside map", frame)}
-        <GeoJSONLayer id={"geo123"} data={frame} symbolLayout={layout} />
       </Mapbox>
     </>
   );
